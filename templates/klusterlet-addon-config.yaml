@@ -1,0 +1,25 @@
+{{- if .Values.addons.enabled }}
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: {{ include "rosa-acm-import.clusterName" . }}
+  namespace: {{ include "rosa-acm-import.namespace" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "rosa-acm-import.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  clusterName: {{ include "rosa-acm-import.clusterName" . }}
+  clusterNamespace: {{ include "rosa-acm-import.namespace" . }}
+  clusterLabels:
+    cloud: {{ .Values.labels.cloud | quote }}
+    vendor: {{ .Values.labels.vendor | quote }}
+  applicationManager:
+    enabled: {{ .Values.addons.applicationManager }}
+  policyController:
+    enabled: {{ .Values.addons.policyController }}
+  searchCollector:
+    enabled: {{ .Values.addons.searchCollector }}
+  certPolicyController:
+    enabled: {{ .Values.addons.certPolicyController }}
+{{- end }}

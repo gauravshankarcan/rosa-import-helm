@@ -1,0 +1,59 @@
+# ---------------------------------------------------------------------------
+# Required — identify the ROSA cluster in ACM
+# ---------------------------------------------------------------------------
+# Must be a valid Kubernetes DNS-1035 label (lowercase, digits, hyphens).
+# Prefer the ROSA cluster name (e.g. terranova-rosa-gs).
+clusterName: ""
+
+# ---------------------------------------------------------------------------
+# Labels applied to ManagedCluster (and optionally KlusterletAddonConfig)
+# ---------------------------------------------------------------------------
+labels:
+  cloud: Amazon
+  vendor: OpenShift
+  # Extra labels (merged):
+  # environment: lab
+
+# ManagedClusterSet name to join (label key cluster.open-cluster-management.io/clusterset)
+clusterSet: default
+
+# ---------------------------------------------------------------------------
+# ManagedCluster spec
+# ---------------------------------------------------------------------------
+managedCluster:
+  hubAcceptsClient: true
+  leaseDurationSeconds: 60
+
+# ---------------------------------------------------------------------------
+# Auto-import credentials (ONE of token+server OR kubeconfig)
+# Pass secrets via --set / -f values-secret.yaml (do not commit real tokens).
+# ---------------------------------------------------------------------------
+import:
+  # How many times the import controller retries
+  autoImportRetry: "5"
+
+  # Method A — token + API server (recommended for ROSA)
+  token: ""
+  server: ""
+
+  # Method B — full kubeconfig YAML string (alternative to token/server)
+  # Use: --set-file import.kubeconfig=/tmp/rosa.kubeconfig
+  kubeconfig: ""
+
+# ---------------------------------------------------------------------------
+# Klusterlet add-ons (optional)
+# ---------------------------------------------------------------------------
+addons:
+  enabled: true
+  applicationManager: true
+  policyController: true
+  searchCollector: true
+  certPolicyController: true
+
+# ---------------------------------------------------------------------------
+# Namespace for import artifacts (defaults to clusterName)
+# ACM expects ManagedCluster name == namespace for auto-import.
+# ---------------------------------------------------------------------------
+namespace:
+  create: true
+  # name: ""   # defaults to clusterName

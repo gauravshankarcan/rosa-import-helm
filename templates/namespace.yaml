@@ -1,0 +1,11 @@
+{{- if .Values.namespace.create }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ include "rosa-acm-import.namespace" . }}
+  labels:
+    cluster.open-cluster-management.io/managedCluster: {{ include "rosa-acm-import.clusterName" . | quote }}
+    app.kubernetes.io/name: {{ include "rosa-acm-import.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}

@@ -1,0 +1,37 @@
+# Example values for importing terranova-rosa-gs into ACM.
+# Copy to values-secret.yaml (gitignored) and fill token/server — do not commit secrets.
+
+clusterName: terranova-rosa-gs
+
+labels:
+  cloud: Amazon
+  vendor: OpenShift
+  environment: lab
+
+clusterSet: default
+
+managedCluster:
+  hubAcceptsClient: true
+  leaseDurationSeconds: 60
+
+import:
+  autoImportRetry: "5"
+  # From ROSA: oc whoami -t
+  token: "REPLACE_WITH_ROSA_TOKEN"
+  # From ROSA: oc whoami --show-server
+  server: "https://api.u0t2c9u4k6w9e6r.mjkz.p3.openshiftapps.com:443"
+  # Or use kubeconfig instead of token/server:
+  # kubeconfig: |
+  #   apiVersion: v1
+  #   kind: Config
+  #   ...
+
+addons:
+  enabled: true
+  applicationManager: true
+  policyController: true
+  searchCollector: true
+  certPolicyController: true
+
+namespace:
+  create: true

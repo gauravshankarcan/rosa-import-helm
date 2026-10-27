@@ -1,0 +1,15 @@
+apiVersion: v2
+name: rosa-acm-import
+description: >
+  Import an existing ROSA (HCP) cluster into a Red Hat Advanced Cluster Management
+  hub using ManagedCluster + auto-import-secret (+ optional KlusterletAddonConfig).
+type: application
+version: 0.1.0
+appVersion: "acm-2.x"
+keywords:
+  - rosa
+  - acm
+  - import
+  - managedcluster
+maintainers:
+  - name: platform

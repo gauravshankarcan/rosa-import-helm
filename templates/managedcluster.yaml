@@ -1,0 +1,12 @@
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  name: {{ include "rosa-acm-import.clusterName" . }}
+  labels:
+    {{- include "rosa-acm-import.managedClusterLabels" . | nindent 4 }}
+    app.kubernetes.io/name: {{ include "rosa-acm-import.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  hubAcceptsClient: {{ .Values.managedCluster.hubAcceptsClient }}
+  leaseDurationSeconds: {{ .Values.managedCluster.leaseDurationSeconds }}
